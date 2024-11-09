@@ -1,13 +1,3 @@
-def max_path_sum(triangle):
-    # Start from the second last row and move upwards
-    for row in range(len(triangle) - 2, -1, -1):
-        for col in range(len(triangle[row])):
-            # Update the current element with the maximum path sum from below
-            triangle[row][col] += max(triangle[row + 1][col], triangle[row + 1][col + 1])
-    
-    # The top element will contain the maximum path sum
-    return triangle[0][0]
-
 # Define the triangle
 triangle = [
     [75],
@@ -27,6 +17,43 @@ triangle = [
     [4, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 4, 23]
 ]
 
-# Find the maximum path sum
-max_sum = max_path_sum(triangle)
-print("The maximum total from top to bottom is:", max_sum)
+# Create a copy of the triangle to calculate the path sums without altering the original
+triangle_copy = [row[:] for row in triangle]
+
+# Dynamic programming to compute maximum path sum and track the path
+path_indices = []
+for row in range(len(triangle_copy) - 2, -1, -1):
+    for col in range(len(triangle_copy[row])):
+        # Add the maximum possible sum from the row below
+        if triangle_copy[row + 1][col] > triangle_copy[row + 1][col + 1]:
+            triangle_copy[row][col] += triangle_copy[row + 1][col]
+        else:
+            triangle_copy[row][col] += triangle_copy[row + 1][col + 1]
+
+# The top element now contains the maximum path sum
+max_sum = triangle_copy[0][0]
+
+# Track the path from the top to bottom based on the computed sums
+index = 0
+path_indices.append(index)
+for row in range(1, len(triangle_copy)):
+    if index + 1 < len(triangle_copy[row]) and triangle_copy[row][index + 1] > triangle_copy[row][index]:
+        index += 1
+    path_indices.append(index)
+
+
+# Print the triangle with highlighted maximum path
+spaces = len(triangle[-1]) - 1
+for i, row in enumerate(triangle):
+    print("  " * spaces, end="")  # Center align each row
+    for j, value in enumerate(row):
+        if path_indices[i] == j:
+            color = "\033[31m"  # Red color for the path
+            reset = "\033[0m"
+            print(f"{color}{value:02}{reset}", end="  ")  # Highlighted value
+        else:
+            print(f"{value:02}", end="  ")  # Regular values
+    print("")
+    spaces -= 1
+print("\033[31m" + str((path_indices)) + "\033[0m")
+print("Maximum path sum (dynamic programming approach):" + "\033[31m" + str(max_sum) + "\033[0m")
