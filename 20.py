@@ -1,9 +1,15 @@
-from math import factorial
+#Number for determine its factorial
+n=100
 
-# Step 1: Calculate 100!
-factorial_100 = factorial(100)
+#Calculation for the factorial of N
+fact=1
+for i in range (1,int(n+1)):
+    fact=fact*i
+print(fact)
 
-# Step 2: Convert to string and sum the digits
-sum_of_digits = sum(int(digit) for digit in str(factorial_100))
-sum_of_digits
-print (sum_of_digits)
+#Sum of the digits of the factorial
+str_fact=str(fact)
+sum=0
+for j in range (0, len(str_fact)):
+    sum+=int(str_fact[j])
+print (sum)
