@@ -22,3 +22,4 @@ for i in range(1, len(sums) + 1):
         sum_an += i + k
 
 print("sum of amicable numbers:", sum_an)
+#the initial solution had eficiency problems
