@@ -17,3 +17,4 @@ for index, name in enumerate(names, start=1):  # Enumerate with position startin
     total_score += name_value * index
 
 print(f"Total of all name scores in the file: {total_score}")
+#Minimal changes
