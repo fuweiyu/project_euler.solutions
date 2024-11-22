@@ -7,3 +7,4 @@ for i in range (0, 3):
         for k in range (0, 3):
             if(k!=i and k!=j):
                 permutation[2]=k
+                	print (permutation)
